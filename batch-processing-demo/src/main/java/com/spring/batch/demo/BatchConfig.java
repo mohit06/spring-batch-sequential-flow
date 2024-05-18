@@ -34,15 +34,16 @@ public class BatchConfig {
 
     @Bean
     public Step step2(JobRepository jobRepository, PlatformTransactionManager transactionManager) throws Exception {
-        boolean isTrue = true;
-        if(isTrue){
-            throw new Exception("Execption Occured!!");
-        }
+
         return new StepBuilder("step_two", jobRepository)
                 .tasklet(new Tasklet() {
                     @Override
                     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
                         System.out.println("STEP2 EXECUTED");
+                        boolean isTrue = true;
+                        if(isTrue){
+                            throw new Exception("Exception occured!!");
+                        }
                         return RepeatStatus.FINISHED;
                     }
                 }, transactionManager)
